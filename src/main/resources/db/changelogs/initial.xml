@@ -1,0 +1,177 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+	<changeSet id="001" author="tiago.gashu">
+		<createSequence sequenceName="BOOK_SEQ" />
+	</changeSet>
+	
+	<changeSet id="005" author="tiago.gashu">
+		<createTable tableName="BOOK">
+			<column name="ID" type="java.sql.Types.BIGINT">
+				<constraints primaryKey="true" nullable="false" primaryKeyName="PK_BOOK" />
+			</column>
+			<column name="NAME" type="java.sql.Types.VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="010" author="tiago.gashu">
+		<createSequence sequenceName="AUTHOR_SEQ" />
+	</changeSet>
+	
+	<changeSet id="015" author="tiago.gashu">
+		<createTable tableName="AUTHOR">
+			<column name="ID" type="java.sql.Types.BIGINT">
+				<constraints primaryKey="true" nullable="false" primaryKeyName="PK_AUTHOR" />
+			</column>
+			<column name="NAME" type="java.sql.Types.VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="016" author="tiago.gashu">
+		<createTable tableName="BOOK_AUTHOR">
+			<column name="BOOK_ID" type="java.sql.Types.BIGINT">
+				<constraints references="BOOK(ID)" foreignKeyName="FK_BOOK_BOOK_AUTHOR" />
+			</column>
+			<column name="AUTHOR_ID" type="java.sql.Types.BIGINT">
+				<constraints references="AUTHOR(ID)" foreignKeyName="FK_AUTHOR_BOOK_AUTHOR" />
+			</column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="017" author="tiago.gashu">
+		<createIndex tableName="BOOK_AUTHOR" indexName="IX_BOOK_AUTHOR_BOOK">
+			<column name="BOOK_ID" />
+		</createIndex>
+		<createIndex tableName="BOOK_AUTHOR" indexName="IX_BOOK_AUTHOR_AUTHOR">
+			<column name="AUTHOR_ID" />
+		</createIndex>
+	</changeSet>
+	
+	<changeSet id="020" author="tiago.gashu">
+		<createSequence sequenceName="GENRE_SEQ" />
+	</changeSet>
+	
+	<changeSet id="025" author="tiago.gashu">
+		<createTable tableName="GENRE">
+			<column name="ID" type="java.sql.Types.BIGINT">
+				<constraints primaryKey="true" nullable="false" primaryKeyName="PK_GENRE" />
+			</column>
+			<column name="GENRE" type="java.sql.Types.VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="026" author="tiago.gashu">
+		<createTable tableName="BOOK_GENRE">
+			<column name="BOOK_ID" type="java.sql.Types.BIGINT">
+				<constraints references="BOOK(ID)" foreignKeyName="FK_BOOK_BOOK_GENRE" />
+			</column>
+			<column name="GENRE_ID" type="java.sql.Types.BIGINT">
+				<constraints references="GENRE(ID)" foreignKeyName="FK_GENRE_BOOK_GENRE" />
+			</column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="027" author="tiago.gashu">
+		<createIndex tableName="BOOK_GENRE" indexName="IX_BOOK_GENRE_BOOK">
+			<column name="BOOK_ID" />
+		</createIndex>
+		<createIndex tableName="BOOK_GENRE" indexName="IX_BOOK_GENRE_GENRE">
+			<column name="GENRE_ID" />
+		</createIndex>
+	</changeSet>
+	
+	<changeSet id="030" author="tiago.gashu">
+		<createSequence sequenceName="CHAPTER_SEQ" />
+	</changeSet>
+	
+	<changeSet id="035" author="tiago.gashu">
+		<createTable tableName="CHAPTER">
+			<column name="ID" type="java.sql.Types.BIGINT">
+				<constraints primaryKey="true" nullable="false" primaryKeyName="PK_CHAPTER" />
+			</column>
+			<column name="BOOK_ID" type="java.sql.Types.BIGINT">
+				<constraints references="BOOK(ID)" foreignKeyName="FK_BOOK_CHAPTER" />
+			</column>
+			<column name="CHAPTER_NAME" type="java.sql.Types.VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="ORDEM" type="java.sql.Types.BIGINT">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="036" author="tiago.gashu">
+		<createIndex tableName="CHAPTER" indexName="IX_CHAPTER_BOOK">
+			<column name="BOOK_ID" />
+		</createIndex>
+	</changeSet>
+	
+	<changeSet id="040" author="tiago.gashu">
+		<createSequence sequenceName="MANGA_SEQ" />
+	</changeSet>
+	
+	<changeSet id="045" author="tiago.gashu">
+		<createTable tableName="MANGA">
+			<column name="ID" type="java.sql.Types.BIGINT">
+				<constraints primaryKey="true" nullable="false" primaryKeyName="PK_MANGA" />
+			</column>
+			<column name="COMPLETED" type="java.sql.types.BOOLEAN" defaultValueBoolean="false">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="050" author="tiago.gashu">
+		<createTable tableName="MANGA_CHAPTER">
+			<column name="ID" type="java.sql.Types.BIGINT">
+				<constraints primaryKey="true" nullable="false" primaryKeyName="PK_MANGA_CHAPTER" />
+			</column>
+			<column name="MANGA_ID" type="java.sql.Types.BIGINT">
+				<constraints references="MANGA(ID)" foreignKeyName="FK_MANGA" />
+			</column>
+			<column name="DATE_ADDED" type="java.sql.Types.TIMESTAMP" />
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="055" author="tiago.gashu">
+		<createIndex tableName="MANGA_CHAPTER" indexName="IX_MANGA_CHAPTER_DATE">
+			<column name="DATE_ADDED" />
+		</createIndex>
+	</changeSet>
+	
+	<changeSet id="060" author="tiago.gashu">
+		<createSequence sequenceName="MANGA_PAGE_SEQ" />
+	</changeSet>
+	
+	<changeSet id="065" author="tiago.gashu">
+		<createTable tableName="MANGA_PAGE">
+			<column name="ID" type="java.sql.Types.BIGINT">
+				<constraints primaryKey="true" nullable="false" primaryKeyName="PK_MANGA_PAGE" />
+			</column>
+			<column name="MANGA_CHAPTER_ID" type="java.sql.Types.BIGINT">
+				<constraints references="MANGA_CHAPTER(ID)" foreignKeyName="FK_MANGA_CHAPTER" />
+			</column>
+			<column name="ORDEM" type="java.sql.Types.BIGINT">
+				<constraints nullable="false"/>
+			</column>
+			<column name="DATA" type="java.sql.Types.BLOB" />
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="066" author="tiago.gashu">
+		<createIndex tableName="MANGA_PAGE" indexName="IX_MANGA_PAGE_CHAPTER">
+			<column name="MANGA_CHAPTER_ID" />
+		</createIndex>
+	</changeSet>
+	
+</databaseChangeLog>
