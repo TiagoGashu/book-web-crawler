@@ -1,5 +1,5 @@
 /**
- * @author tiago.gashu
+ * 
  */
 package generics.converter;
 
