@@ -2,26 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="utf-8" />
-        <title>Lista de livros</title>
+        <title>book-web-crawler</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
         <link rel="stylesheet" href="static/css/index.css" />
     </head>
  
     <body background="static/book_background.jpg">
 		<div class="coluna">
-            <div id="app" class="container main-container">
-                <h2 class="titulo">{{header}}</h2>
-                
-                <nav-bar></nav-bar>
-		     
-                <add-book-comp></add-book-comp>
-	
-                <view-books-comp></view-books-comp>
-		     
-                <remove-books-comp></remove-books-comp>
-		     
-                <a id="copyright" href="http://www.freepik.com">Designed by starline / Freepik</a>
-            </div>
+			<app></app>
 	    </div>
     </body>
 

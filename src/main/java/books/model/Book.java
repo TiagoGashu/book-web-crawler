@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import com.beust.jcommander.internal.Lists;
 
 /**
  * @author tiago.gashu
@@ -29,10 +30,10 @@ import javax.persistence.Table;
 public class Book {
 
   private Long id;
-  private List<Genre> genres;
+  private List<Genre> genres = Lists.newArrayList();
   private String name;
-  private List<Author> authors;
-  private List<Chapter> chapters;
+  private List<Author> authors = Lists.newArrayList();
+  private List<Chapter> chapters = Lists.newArrayList();
 
   /** */
   public Book() {

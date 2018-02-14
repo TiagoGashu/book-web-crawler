@@ -1,5 +1,5 @@
 <script>
-	import store from './store.vue'
+	import store from '../vuex/store.vue'
 
 	export default {
 		computed: {

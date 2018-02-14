@@ -1,6 +1,7 @@
 <script>
 	export default {
 		components: {
+			'App': 'app',
 	    	'NavBar': 'nav-bar',
 	    	'ViewBooksComp': 'view-books-comp',
 	    	'AddBookComp': 'add-book-comp',

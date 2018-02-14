@@ -12,9 +12,9 @@
 
 <script>
 	/** componente barra de navegacao */
-	import C from './constants.vue'
+	import C from '../constants.vue'
 	import Vue from 'vue'
-	import store from './store.vue'
+	import store from '../vuex/store.vue'
 	
 	export default {
 		data() {

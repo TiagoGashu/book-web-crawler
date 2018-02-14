@@ -4,18 +4,18 @@
             <div class="input-group-prepend mb-3">
                <span class="input-group-text">Book&apos;s name</span>
             </div>
-            <input v-model="root.novoLivro.name" @keyup.enter="addLivro"
+            <input v-model="newBook.name" @keyup.enter="addLivro"
                 type="text" class="form-control" style="height: 38px;"/>
         </div>
         <div class="input-group">
             <div class="input-group-prepend mb-3">
                <span class="input-group-text">Author&apos;s name</span>
             </div>
-            <input v-model="root.novoLivro.authorName" @keyup.enter="addLivro"
+            <input v-model="newBook.authorName" @keyup.enter="addLivro"
                 type="text" class="form-control" style="height: 38px;"/>
         </div>
         <div class="input-group-btn" v-show="fieldsDefined"> 
-            <button @click="addLivro" class="js-add btn btn-primary"
+            <button @click="addBook" class="js-add btn btn-primary"
                 type="button">Add Book</button> 
         </div>
     </div>
@@ -23,32 +23,46 @@
 
 <script>
 	/** componente para adição de livros */
-	import C from './constants.vue'
+	import C from '../constants.vue'
 	import Vue from 'vue'
-	import store from './store.vue'
-	import services from './services.vue'
-	import navigationmixin from './navigationmix.vue'
+	import store from '../vuex/store.vue'
+	import navigationmixin from '../services/navigationmix.vue'
+	import services from '../services/services.vue'
 	
 	var data = {
-		root: store.state,
+		newBook: {
+			name: '',
+			authorName: ''
+		},
 		componentName: C.components.AddBookComp
 	};
 	
+	var vuexObj = {
+		actions: {
+			dispatchAddBook({dispatch}, newBook) {
+				dispatch('saveNewBook', newBook)
+			}
+		}
+	}
+	
 	export default {
-		mixins: [navigationmixin],
 		data() {
 			return data;
 		},
+		mixins: [navigationmixin],
+		vuex: vuexObj,
 		computed: {
 		    fieldsDefined() {
-		    	return this.root.novoLivro.name != '' && this.root.novoLivro.authorName != '';
+		    	return this.newBook.name != '' && this.newBook.authorName != '';
 		    }
 		},
 		methods: {
-			addLivro() {
-				var novoLivro = this.root.novoLivro;
-        		services.saveBook(novoLivro);
-        		this.root.novoLivro = {}
+			addBook() {
+				var newBook = services.copyBook(this.newBook);
+        		this.$store.dispatch('saveNewBook', newBook);
+        		// estado interno do componente
+        		this.newBook.name = '';
+        		this.newBook.authorName = '';
 			}
 		}
 	}

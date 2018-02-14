@@ -1,5 +1,5 @@
 <script>
-	import C from './constants.vue'
+	import C from '../constants.vue'
 	
 	export default {
 	    itens: [

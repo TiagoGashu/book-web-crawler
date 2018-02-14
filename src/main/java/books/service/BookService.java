@@ -12,7 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.common.collect.Lists;
 import books.converter.BookConverter;
 import books.json.BookJson;
+import books.model.Author;
 import books.model.Book;
+import books.model.Genre;
+import books.repository.AuthorRepository;
 import books.repository.BookRepository;
 
 /**
@@ -26,6 +29,8 @@ public class BookService {
   private BookConverter converter;
   @Autowired
   private BookRepository repo;
+  @Autowired
+  private AuthorRepository authorRepo;
 
   @Transactional(readOnly = true)
   public List<BookJson> findAll() {
@@ -58,6 +63,12 @@ public class BookService {
 
   public BookJson save(BookJson json) {
     Book entity = this.converter.convertToEntity(json);
+    List<Genre> genres = entity.getGenres();
+    // TODO: salvar generos
+    List<Author> authors = entity.getAuthors();
+    for (Author author : authors) {
+      this.authorRepo.save(author);
+    }
     this.repo.save(entity);
     return this.converter.convertToJson(this.repo.findOne(entity.getId()));
   }
