@@ -1,8 +1,8 @@
-import axios from 'axios'
-// TODO: qual vue precisamos importar?
-// import Vue from 'vue'
+import Vue from 'vue'
+
 import C from './components/constants.vue'
 import data from './components/data.vue'
+
 // componentes de tela
 import NavBar from './components/navbar.vue'
 import AddBookComp from './components/addbookcomp.vue'
