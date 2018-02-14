@@ -35,7 +35,8 @@
  	
  	var data = {
  		root: store.state,
-        componentName: C.components.RemoveBooksComp
+		/** aparece junto com o componente de view */
+		componentName: C.components.ViewBooksComp
  	}
  	
  	export default {
@@ -62,7 +63,7 @@
 		},
 		computed: {
 			plural: function() {
-				if(this.livrosRemover.length > 1) {
+				if(this.root.livrosRemover.length > 1) {
 					return 's';
 				} else {
 					return '';
