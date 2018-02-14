@@ -10,8 +10,6 @@ import ViewBooksComp from './components/viewbookscomp.vue'
 import EditBookComp from './components/editbookcomp.vue'
 import RemoveBooksComp from './components/removebookscomp.vue'
 
-// index.js INI
-
 // registrando componentes
 Vue.component(C.components.NavBar, NavBar);
 Vue.component(C.components.AddBookComp, AddBookComp);
@@ -19,12 +17,8 @@ Vue.component(C.components.ViewBooksComp, ViewBooksComp);
 Vue.component(C.components.EditBookComp, EditBookComp);
 Vue.component(C.components.RemoveBooksComp, RemoveBooksComp);
 
- /** 
-  * Instanciando o Vue
-  */ 
  new Vue({ 
    el: '#app', 
    data: data 
  });
  
- // index.js FIM
