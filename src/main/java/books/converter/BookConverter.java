@@ -1,7 +1,9 @@
 package books.converter;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import com.google.common.collect.Lists;
 import books.json.BookJson;
 import books.model.Author;
 import books.model.Book;
@@ -35,22 +37,35 @@ public class BookConverter extends Converter<Book, BookJson> {
   // TO ENTITY METHODS
 
   public Book convertToEntity(BookJson json) {
-    Book book = new Book();
-    Book found = null;
+    Book book = null;
     if (json.getId() != null) {
-      found = this.bookRepo.findOne(json.getId());
+      book = this.bookRepo.findOne(json.getId());
+    } else {
+      book = new Book();
     }
-    book.setId(json.getId());
     book.setName(json.getName());
+
+    List<Author> authors = this.convertAuthors(json);
+
+    book.getAuthors().clear();
+    for (Author author : authors) {
+      book.getAuthors().add(author);
+    }
+
+    return book;
+  }
+
+  private List<Author> convertAuthors(BookJson json) {
+    List<Author> authors = Lists.newArrayList();
     if (json.getAuthorName() != null) {
       String authorName = json.getAuthorName();
       Author author = this.authorRepo.findByName(authorName);
       if (author == null) {
         author = new Author(null, authorName);
       }
-      book.getAuthors().add(author);
+      authors.add(author);
     }
-    return book;
+    return authors;
   }
 
 }

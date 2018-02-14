@@ -63,13 +63,17 @@ public class BookService {
 
   public BookJson save(BookJson json) {
     Book entity = this.converter.convertToEntity(json);
-    List<Genre> genres = entity.getGenres();
+
     // TODO: salvar generos
+    List<Genre> genres = entity.getGenres();
+
     List<Author> authors = entity.getAuthors();
     for (Author author : authors) {
       this.authorRepo.save(author);
     }
+
     this.repo.save(entity);
+
     return this.converter.convertToJson(this.repo.findOne(entity.getId()));
   }
 

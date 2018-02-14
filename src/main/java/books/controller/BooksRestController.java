@@ -60,7 +60,7 @@ public class BooksRestController {
     try {
       retJson = this.service.save(json);
     } catch (Exception e) {
-      return new ResponseEntity<BookJson>(HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<BookJson>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     return new ResponseEntity<BookJson>(retJson, HttpStatus.OK);
