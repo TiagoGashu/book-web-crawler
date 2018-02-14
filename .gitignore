@@ -2,3 +2,6 @@
 .settings/
 .project
 target/
+src/main/webapp/static/dist/build.js
+src/main/webapp/static/dist/build.js.map
+src/main/webapp/static/node_modules/
