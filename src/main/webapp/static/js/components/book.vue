@@ -26,7 +26,7 @@
     
     <div class="input-group" v-for="genre in book.genres">
         <div class="input-group-prepend mb-3">
-            <span class="input-group-text">Genres</span>
+            <span class="input-group-text">Genre</span>
         </div>
         <input v-model="genre.genre" type="text" 
         	class="form-control" style="height: 38px;"/>

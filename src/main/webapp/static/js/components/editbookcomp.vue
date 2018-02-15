@@ -61,8 +61,7 @@
 				utils.copyBook(bookToEdit, this.bookEditing);
 	    	},
 	    	_canSave() {
-	    		return this.editing && utils.isNotEmpty(this.bookEditing.name) && 
-					utils.isNotEmpty(this.bookEditing.authorName) && this.bookEditing.id != null;
+	    		return utils.canSaveBook(this.bookEditing);
 	    	},
 	    	save() {
 	    		if(!this._canSave()) {

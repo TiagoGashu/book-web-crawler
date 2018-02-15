@@ -8,7 +8,7 @@
                         {{ livro.name }} - 
                         <small v-for="author in livro.authors">
                         	{{ author.name }}
-                        </small> 
+                        </small>
                         <span>id: {{livro.id}}</span>
                     </div>  
                 </li> 
