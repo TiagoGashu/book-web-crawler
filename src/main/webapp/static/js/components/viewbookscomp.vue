@@ -5,7 +5,10 @@
                 <li class="list-group-item" v-for="livro in livros" :class="{'active': livro.checked }"> 
                     <div class="checkbox"> 
                         <input type="checkbox" v-model="livro.checked"> 
-                        {{ livro.name }} - <small>{{ livro.authorName }}</small> 
+                        {{ livro.name }} - 
+                        <small v-for="author in livro.authors">
+                        	{{ author.name }}
+                        </small> 
                         <span>id: {{livro.id}}</span>
                     </div>  
                 </li> 

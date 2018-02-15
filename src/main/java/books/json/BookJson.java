@@ -1,6 +1,7 @@
 package books.json;
 
 import java.io.Serializable;
+import java.util.List;
 import books.model.Book;
 
 /**
@@ -15,7 +16,9 @@ public class BookJson implements Serializable {
 
   private Long id;
   private String name;
-  private String authorName;
+  private List<AuthorJson> authors;
+  private List<GenreJson> genres;
+  private List<ChapterJson> chapters;
 
   // GETTERS / SETTERS
 
@@ -35,14 +38,28 @@ public class BookJson implements Serializable {
     this.name = name;
   }
 
-  public String getAuthorName() {
-    return authorName;
+  public List<AuthorJson> getAuthors() {
+    return authors;
   }
 
-  public void setAuthorName(String authorName) {
-    this.authorName = authorName;
+  public void setAuthors(List<AuthorJson> authors) {
+    this.authors = authors;
   }
 
+  public List<GenreJson> getGenres() {
+    return genres;
+  }
 
+  public void setGenres(List<GenreJson> genres) {
+    this.genres = genres;
+  }
+
+  public List<ChapterJson> getChapters() {
+    return chapters;
+  }
+
+  public void setChapters(List<ChapterJson> chapters) {
+    this.chapters = chapters;
+  }
 
 }

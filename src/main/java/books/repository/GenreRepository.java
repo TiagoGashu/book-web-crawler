@@ -11,4 +11,6 @@ import books.model.Genre;
  */
 public interface GenreRepository extends CrudRepository<Genre, Long> {
 
+  public Genre findByGenre(String genre);
+
 }

@@ -17,6 +17,7 @@ import books.model.Book;
 import books.model.Genre;
 import books.repository.AuthorRepository;
 import books.repository.BookRepository;
+import books.repository.GenreRepository;
 
 /**
  * @author tiago.gashu
@@ -29,6 +30,8 @@ public class BookService {
   private BookConverter converter;
   @Autowired
   private BookRepository repo;
+  @Autowired
+  private GenreRepository genreRepo;
   @Autowired
   private AuthorRepository authorRepo;
 
@@ -64,8 +67,10 @@ public class BookService {
   public BookJson save(BookJson json) {
     Book entity = this.converter.convertToEntity(json);
 
-    // TODO: salvar generos
     List<Genre> genres = entity.getGenres();
+    for (Genre genre : genres) {
+      this.genreRepo.save(genre);
+    }
 
     List<Author> authors = entity.getAuthors();
     for (Author author : authors) {

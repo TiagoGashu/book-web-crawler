@@ -4,6 +4,7 @@
 	import Vue from 'vue'
 	import Vuex from 'vuex'
 	import data from '../data.vue'
+	import utils from '../services/utils.vue'
 
 	Vue.use(Vuex)
 	
@@ -46,7 +47,7 @@
             })
         },
         saveNewBook(context, book) {
-        	if(book && book.name && book.authorName) {
+        	if(utils.canSaveBook(book)) {
 				axios.post('http://localhost:8080/books', book).then(function(response) {
 		            context.dispatch('refreshBooks');
 		        })
@@ -64,7 +65,7 @@
         	}
         },
         save(context, editedBook) {
-        	if(editedBook && editedBook.name && editedBook.authorName) {
+        	if(utils.canSaveBook(editedBook)) {
 				axios.post('http://localhost:8080/books', editedBook).then(function(response) {
 		        	context.commit('STOP_EDITING');
 		        	context.dispatch('refreshBooks');

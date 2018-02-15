@@ -3,11 +3,10 @@ package books.converter;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.google.common.collect.Lists;
 import books.json.BookJson;
 import books.model.Author;
 import books.model.Book;
-import books.repository.AuthorRepository;
+import books.model.Genre;
 import books.repository.BookRepository;
 import generics.converter.Converter;
 
@@ -18,7 +17,9 @@ import generics.converter.Converter;
 public class BookConverter extends Converter<Book, BookJson> {
 
   @Autowired
-  private AuthorRepository authorRepo;
+  private AuthorConverter authorConverter;
+  @Autowired
+  private GenreConverter genreConverter;
   @Autowired
   private BookRepository bookRepo;
 
@@ -28,9 +29,8 @@ public class BookConverter extends Converter<Book, BookJson> {
     BookJson json = new BookJson();
     json.setId(book.getId());
     json.setName(book.getName());
-    if (book.getAuthors().size() > 0) {
-      json.setAuthorName(book.getAuthors().get(0).getName());
-    }
+    json.setAuthors(this.authorConverter.convertToJsons(book.getAuthors()));
+    json.setGenres(this.genreConverter.convertToJsons(book.getGenres()));
     return json;
   }
 
@@ -45,27 +45,19 @@ public class BookConverter extends Converter<Book, BookJson> {
     }
     book.setName(json.getName());
 
-    List<Author> authors = this.convertAuthors(json);
-
     book.getAuthors().clear();
+    List<Author> authors = this.authorConverter.convertToEntities(json.getAuthors());
     for (Author author : authors) {
       book.getAuthors().add(author);
     }
 
-    return book;
-  }
-
-  private List<Author> convertAuthors(BookJson json) {
-    List<Author> authors = Lists.newArrayList();
-    if (json.getAuthorName() != null) {
-      String authorName = json.getAuthorName();
-      Author author = this.authorRepo.findByName(authorName);
-      if (author == null) {
-        author = new Author(null, authorName);
-      }
-      authors.add(author);
+    book.getGenres().clear();
+    List<Genre> genres = this.genreConverter.convertToEntities(json.getGenres());
+    for (Genre genre : genres) {
+      book.getGenres().add(genre);
     }
-    return authors;
+
+    return book;
   }
 
 }
