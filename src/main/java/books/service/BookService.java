@@ -82,9 +82,13 @@ public class BookService {
     return this.converter.convertToJson(this.repo.findOne(entity.getId()));
   }
 
-  public void delete(List<Long> bookIds) {
+  public List<BookJson> delete(List<Long> bookIds) {
+    List<BookJson> arr = Lists.newArrayList();
     for (Long id : bookIds) {
+      BookJson json = this.converter.convertToJson(this.repo.findOne(id));
+      arr.add(json);
       this.repo.delete(id);
     }
+    return arr;
   }
 }

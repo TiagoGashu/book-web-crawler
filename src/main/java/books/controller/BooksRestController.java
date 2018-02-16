@@ -77,9 +77,9 @@ public class BooksRestController {
   // endpoints DELETE
 
   @DeleteMapping(path = "/books")
-  public ResponseEntity<BookJson> delete(@RequestParam(name = "bookIds") List<Long> bookIds) {
-    this.service.delete(bookIds);
-    return new ResponseEntity<BookJson>(new BookJson(), HttpStatus.OK);
+  public ResponseEntity<List<BookJson>> delete(@RequestParam(name = "bookIds") List<Long> bookIds) {
+    List<BookJson> arr = this.service.delete(bookIds);
+    return new ResponseEntity<List<BookJson>>(arr, HttpStatus.OK);
   }
 
 }

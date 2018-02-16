@@ -41,16 +41,16 @@
 		    fieldsDefined() {
 		    	return this.newBook.name != '' && this.newBook.authorName != '';
 		    },
-		    getBookPath() {
-		    	
-		    }
 		},
 		methods: {
 			addBook() {
 				var newBook = {};
 				utils.copyBook(this.newBook, newBook);
-        		this.$store.dispatch('saveNewBook', newBook);
-        		utils.copyBook(this.emptyBook, this.newBook);
+        		this.$store.dispatch('saveNewBook', newBook).then(response => {
+        			utils.copyBook(this.emptyBook, this.newBook);
+        		}, error => {
+        			// 
+        		});
 			}
 		}
 	}

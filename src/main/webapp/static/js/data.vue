@@ -6,6 +6,7 @@
        navigation: navigation,
 	   livros: [],
 	   removeAreaVisible: false,
-	   editing: false
+	   editing: false,
+	   alerts: []
     }
 </script>

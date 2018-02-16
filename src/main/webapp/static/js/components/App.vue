@@ -8,7 +8,7 @@
 	
 	    <view-books-comp></view-books-comp>
 	 
-	    <remove-books-comp></remove-books-comp>
+	 	<alerts :alerts="alerts"></alerts>
 	 
 	    <a id="copyright" href="http://www.freepik.com">Designed by starline / Freepik</a>
 	</div>
