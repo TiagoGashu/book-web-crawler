@@ -5,6 +5,9 @@ html, body {
 body {
 	background-size: 550px;
 }
+.container {
+	width: 50% !important;
+}
 body .coluna{
 	min-height: 100%;
     padding: 0;
@@ -20,6 +23,12 @@ body .coluna{
     border-style: solid;
     border-radius: 6px;
     border-color: #dee2e6;	
+}
+.btn.btn-block {
+	display: inline-block;
+    width: 50%;
+    left: 50%;
+    margin-left: 25%;
 }
 .not-editing {
 	padding: 0;

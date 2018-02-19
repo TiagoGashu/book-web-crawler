@@ -1,6 +1,5 @@
 package books.controller;
 
-import static org.springframework.util.StringUtils.isEmpty;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,13 +13,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import books.json.BookJson;
+import books.model.Book;
 import books.service.BookService;
 
 /**
  * @author tiago.gashu
  */
 @RestController
-public class BooksRestController {
+public class BooksRestController extends BooksBaseRestController<BookService, Book, BookJson> {
 
   @Autowired
   private BookService service;
@@ -30,7 +30,7 @@ public class BooksRestController {
   @GetMapping(path = "/books/{bookId}")
   public ResponseEntity<BookJson> getBookById(
       @PathVariable(name = "bookId", required = true) Long bookId) {
-    BookJson json = this.service.find(bookId);
+    BookJson json = this.find(bookId);
     return new ResponseEntity<BookJson>(json, HttpStatus.OK);
   }
 
@@ -38,16 +38,7 @@ public class BooksRestController {
   public ResponseEntity<List<BookJson>> getBooks(
       @RequestParam(name = "name", required = false) String name,
       @RequestParam(name = "authorName", required = false) String authorName) {
-    List<BookJson> bookJsons = null;
-    if (!isEmpty(name) && !isEmpty(authorName)) {
-      bookJsons = this.service.findByNameAndAuthorName(name, authorName);
-    } else if (!isEmpty(name)) {
-      bookJsons = this.service.findByName(name);
-    } else if (!isEmpty(authorName)) {
-      bookJsons = this.service.findByAuthorName(authorName);
-    } else {
-      bookJsons = this.service.findAll();
-    }
+    List<BookJson> bookJsons = this.fetchBooksBy(name, authorName);
     return new ResponseEntity<List<BookJson>>(bookJsons, HttpStatus.OK);
   }
 
@@ -56,9 +47,8 @@ public class BooksRestController {
   @PostMapping(path = "/books")
   public ResponseEntity<BookJson> createOrUpdate(@RequestBody BookJson json) {
     BookJson retJson = null;
-
     try {
-      retJson = this.service.save(json);
+      retJson = this.save(json);
     } catch (Exception e) {
       return new ResponseEntity<BookJson>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -77,9 +67,18 @@ public class BooksRestController {
   // endpoints DELETE
 
   @DeleteMapping(path = "/books")
-  public ResponseEntity<List<BookJson>> delete(@RequestParam(name = "bookIds") List<Long> bookIds) {
-    List<BookJson> arr = this.service.delete(bookIds);
+  public ResponseEntity<List<BookJson>> doDelete(
+      @RequestParam(name = "bookIds") List<Long> bookIds) {
+    List<BookJson> arr = this.delete(bookIds);
     return new ResponseEntity<List<BookJson>>(arr, HttpStatus.OK);
+  }
+
+  /*
+   * @see books.controller.BooksBaseRestController#getService()
+   */
+  @Override
+  protected BookService getService() {
+    return this.service;
   }
 
 }

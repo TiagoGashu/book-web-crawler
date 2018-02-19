@@ -125,6 +125,7 @@
 			<column name="ID" type="java.sql.Types.BIGINT">
 				<constraints primaryKey="true" nullable="false" primaryKeyName="PK_MANGA" />
 			</column>
+			<column name="SOURCE" type="java.sql.Types.VARCHAR(2000)" />
 			<column name="COMPLETED" type="java.sql.types.BOOLEAN" defaultValueBoolean="false">
 				<constraints nullable="false" />
 			</column>
@@ -139,6 +140,7 @@
 			<column name="MANGA_ID" type="java.sql.Types.BIGINT">
 				<constraints references="MANGA(ID)" foreignKeyName="FK_MANGA" />
 			</column>
+			<column name="SOURCE" type="java.sql.Types.VARCHAR(2000)" />
 			<column name="DATE_ADDED" type="java.sql.Types.TIMESTAMP" />
 		</createTable>
 	</changeSet>

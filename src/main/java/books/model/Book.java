@@ -67,10 +67,10 @@ public class Book {
       List<Chapter> chapters) {
     super();
     this.id = id;
-    this.genres = genres;
     this.name = name;
-    this.authors = authors;
-    this.chapters = chapters;
+    this.refreshAndAddAllGenres(genres);
+    this.refreshAndAddAllAuthors(authors);
+    this.refreshAndAddAllChapters(chapters);
   }
 
   // GETTERS / SETTERS
@@ -83,6 +83,13 @@ public class Book {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public void refreshAndAddAllGenres(List<Genre> genres) {
+    this.genres.clear();
+    for (Genre genre : genres) {
+      this.genres.add(genre);
+    }
   }
 
   @OneToMany
@@ -104,6 +111,13 @@ public class Book {
     this.name = name;
   }
 
+  public void refreshAndAddAllAuthors(List<Author> authors) {
+    this.authors.clear();
+    for (Author author : authors) {
+      this.authors.add(author);
+    }
+  }
+
   @OneToMany
   @JoinTable(name = "BOOK_AUTHOR", joinColumns = {@JoinColumn(name = "BOOK_ID")},
       inverseJoinColumns = {@JoinColumn(name = "AUTHOR_ID")})
@@ -113,6 +127,14 @@ public class Book {
 
   public void setAuthors(List<Author> authors) {
     this.authors = authors;
+  }
+
+  public <T extends Chapter> void refreshAndAddAllChapters(List<T> chapters) {
+    this.chapters.clear();
+    for (Chapter ch : chapters) {
+      ch.setBook(this);
+      this.chapters.add(ch);
+    }
   }
 
   @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)

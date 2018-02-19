@@ -15,13 +15,13 @@
 				toBook.authors = [];
 			}
 			toBook.authors.splice(0, toBook.authors.length);
-			fromBook.authors.forEach(function(a) { toBook.authors.push(a); });
+			fromBook.authors.forEach((a) => { toBook.authors.push(a); });
 			
 			if(!toBook.genres) {
 				toBook.genres = [];
 			}
 			toBook.genres.splice(0, toBook.genres.length);
-			fromBook.genres.forEach(function(g) { toBook.genres.push(g); });
+			fromBook.genres.forEach((g) => { toBook.genres.push(g); });
 		},
 		canSaveBook(book) {
 			if(!book) return false;
@@ -37,6 +37,28 @@
 			var unamedGenres = book.genres.filter((g) => g.genre == null || g.genre == '');
 			if(unamedGenres.length > 0) return false;
 		
+			return true;
+		},
+		copyManga(fromManga, toManga) {
+			this.copyBook(fromManga, toManga);
+			toManga.source = fromManga.source;
+			
+			if(!toManga.mangaChapters) {
+				toManga.mangaChapters = [];
+			}
+			toManga.mangaChapters.splice(0, toManga.mangaChapters.length);
+			fromManga.mangaChapters.forEach((c) => { toManga.mangaChapters.push(c); });
+		},
+		canSaveManga(manga) {
+			var canSaveBook = this.canSaveBook(manga);
+			if(!canSaveBook) return false;
+			
+			if(!manga.source) return false;
+			
+			if(!(manga.mangaChapters instanceof Array)) return false;
+			var unamedChapters = manga.mangaChapters.filter((c) => c.chapterName == null || c.chapterName == '');
+			if(unamedChapters.length > 0) return false;
+			
 			return true;
 		},
 		isNotEmpty(str) {

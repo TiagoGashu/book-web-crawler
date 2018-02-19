@@ -1,12 +1,10 @@
 package books.converter;
 
-import java.util.List;
+import java.util.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import books.json.BookJson;
-import books.model.Author;
 import books.model.Book;
-import books.model.Genre;
 import books.repository.BookRepository;
 import generics.converter.Converter;
 
@@ -21,6 +19,8 @@ public class BookConverter extends Converter<Book, BookJson> {
   @Autowired
   private GenreConverter genreConverter;
   @Autowired
+  private ChapterConverter chapterConverter;
+  @Autowired
   private BookRepository bookRepo;
 
   // TO JSON METHODS
@@ -31,6 +31,7 @@ public class BookConverter extends Converter<Book, BookJson> {
     json.setName(book.getName());
     json.setAuthors(this.authorConverter.convertToJsons(book.getAuthors()));
     json.setGenres(this.genreConverter.convertToJsons(book.getGenres()));
+    json.setChapters(this.chapterConverter.convertToJsons(book.getChapters()));
     return json;
   }
 
@@ -45,17 +46,10 @@ public class BookConverter extends Converter<Book, BookJson> {
     }
     book.setName(json.getName());
 
-    book.getAuthors().clear();
-    List<Author> authors = this.authorConverter.convertToEntities(json.getAuthors());
-    for (Author author : authors) {
-      book.getAuthors().add(author);
-    }
-
-    book.getGenres().clear();
-    List<Genre> genres = this.genreConverter.convertToEntities(json.getGenres());
-    for (Genre genre : genres) {
-      book.getGenres().add(genre);
-    }
+    book.refreshAndAddAllAuthors(this.authorConverter.convertToEntities(json.getAuthors()));
+    book.refreshAndAddAllGenres(this.genreConverter.convertToEntities(json.getGenres()));
+    book.refreshAndAddAllChapters(this.chapterConverter.convertToEntities(json.getChapters()));
+    Collections.sort(book.getChapters());
 
     return book;
   }

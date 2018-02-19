@@ -1,5 +1,6 @@
 <template>
 <div class="editBook">
+	
     <div class="input-group">
         <div class="input-group-prepend mb-3">
         	<span class="input-group-text">Book&apos;s name</span>

@@ -6,11 +6,11 @@ package books.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import books.converter.BookConverter;
-import books.json.BookJson;
-import books.model.Book;
+import books.converter.MangaConverter;
+import books.json.MangaJson;
+import books.model.Manga;
 import books.repository.BookBaseRepository;
-import books.repository.BookRepository;
+import books.repository.MangaRepository;
 import generics.converter.Converter;
 
 /**
@@ -18,18 +18,18 @@ import generics.converter.Converter;
  */
 @Component
 @Transactional
-public class BookService extends BookBaseService<Book, BookJson> {
+public class MangaService extends BookBaseService<Manga, MangaJson> {
 
   @Autowired
-  private BookConverter converter;
+  private MangaConverter converter;
   @Autowired
-  private BookRepository repo;
+  private MangaRepository repo;
 
   /*
    * @see books.service.BookBaseService#getConverter()
    */
   @Override
-  protected Converter<Book, BookJson> getConverter() {
+  protected Converter<Manga, MangaJson> getConverter() {
     return this.converter;
   }
 
@@ -37,7 +37,8 @@ public class BookService extends BookBaseService<Book, BookJson> {
    * @see books.service.BookBaseService#getRepository()
    */
   @Override
-  protected BookBaseRepository<Book> getRepository() {
+  protected BookBaseRepository<Manga> getRepository() {
     return this.repo;
   }
+
 }

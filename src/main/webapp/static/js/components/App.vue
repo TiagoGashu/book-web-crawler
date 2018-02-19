@@ -3,12 +3,18 @@
 	    <h2 class="titulo">{{header}}</h2>
 	    
 	    <nav-bar></nav-bar>
+	    
+	    <add-manga></add-manga>
+	    
+	    <view-mangas></view-mangas>
 	 
 	    <add-book-comp></add-book-comp>
 	
 	    <view-books-comp></view-books-comp>
 	 
 	 	<alerts :alerts="alerts"></alerts>
+	 	
+	 	<modal-confirm :params="modalConfirm"></modal-confirm>
 	 
 	    <a id="copyright" href="http://www.freepik.com">Designed by starline / Freepik</a>
 	</div>

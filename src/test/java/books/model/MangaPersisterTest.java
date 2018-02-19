@@ -58,7 +58,7 @@ public class MangaPersisterTest {
     this.bookChapterRepository.save(ch1);
     this.bookChapterRepository.save(ch2);
 
-    book.setChapters(Lists.newArrayList(ch1, ch2));
+    book.refreshAndAddAllChapters(Lists.newArrayList(ch1, ch2));
     book.setAuthors(Lists.newArrayList(author));
     book.setGenres(Lists.newArrayList(genreFantasy));
     this.bookRepository.save(book);

@@ -43,7 +43,7 @@
 	    		}
 	    		var editedBook = {}
 	    		utils.copyBook(this.bookEditing, editedBook);
-	    		this.$store.dispatch('save', editedBook).then(response => {
+	    		this.$store.dispatch('saveBook', editedBook).then(response => {
 					this.resetBook();
 	    		}, error => {
 					//	    		

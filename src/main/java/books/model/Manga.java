@@ -20,7 +20,8 @@ import com.google.common.collect.Lists;
 @PrimaryKeyJoinColumn(name = "ID")
 public class Manga extends Book {
 
-  private List<MangaChapter> mangaChapters;
+  private List<MangaChapter> mangaChapters = Lists.newArrayList();
+  private String source;
   private boolean completed;
 
   /** */
@@ -37,14 +38,27 @@ public class Manga extends Book {
    * @param completed
    */
   public Manga(Long id, List<Genre> genres, String name, List<Author> authors,
-      List<MangaChapter> chapters, boolean completed) {
+      List<MangaChapter> chapters, String source, boolean completed) {
     super(id, genres, name, authors);
-    this.setMangaChapters(chapters);
+    this.refreshAndAddAllChapters(chapters);
     this.mangaChapters = chapters;
     this.completed = completed;
   }
 
   // GETTERS / SETTERS
+
+  @Override
+  public <T extends Chapter> void refreshAndAddAllChapters(List<T> chapters) {
+    // super.refreshAndAddAllChapters(chapters);
+    this.mangaChapters.clear();
+    for (T ch : chapters) {
+      if (ch instanceof MangaChapter) {
+        MangaChapter mangaCh = (MangaChapter) ch;
+        mangaCh.setManga(this);
+        this.mangaChapters.add(mangaCh);
+      }
+    }
+  }
 
   @OneToMany(mappedBy = "manga", cascade = CascadeType.ALL)
   @OrderBy("ORDEM")
@@ -61,6 +75,14 @@ public class Manga extends Book {
     }
     super.setChapters(bookChapters);
     this.mangaChapters = mangaChapters;
+  }
+
+  public String getSource() {
+    return source;
+  }
+
+  public void setSource(String source) {
+    this.source = source;
   }
 
   public boolean isCompleted() {

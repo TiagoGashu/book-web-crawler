@@ -20,6 +20,7 @@
 		data() {
 			return store.state
 		},
+		props: [],
 		methods: {
 			navigate: function(activeItem, event) {
 				var navigation = this.navigation;
